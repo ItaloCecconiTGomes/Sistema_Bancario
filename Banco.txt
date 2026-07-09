@@ -1,0 +1,192 @@
+package main;
+import java.time.LocalDate;
+
+public class Banco {
+
+	public static void main(String[] args) {
+		Conta conta1 = new Conta("Italo", "Cecconi", LocalDate.of(2004, 06, 02), 12345678912L, 1234, 500f, 600f);
+		System.out.println(conta1);
+		
+		conta1.depositarCorrente(550.6f);
+		conta1.depositarPoupanca(200.1f);
+		
+		conta1.sacarCorrente(1000.8f);
+		
+		
+	}
+
+}
+********************************************************************
+package main;
+import java.time.LocalDate;
+import java.time.Period;
+
+public class Usuario {
+	private String nome;
+	private String sobrenome;
+	private final LocalDate DATANASCIMENTO;
+	private final long CPF;
+	
+	public Usuario (String nome, String sobrenome,LocalDate DATANASCIMENTO, long CPF) {
+		int idade = Period.between(DATANASCIMENTO, LocalDate.now()).getYears();
+        if (idade < 18) {
+            throw new IllegalArgumentException("É necessário ser maior de idade para criar uma conta");
+        }
+		this.nome = nome;		
+		this.sobrenome = sobrenome;
+		this.DATANASCIMENTO = DATANASCIMENTO;
+		this.CPF = CPF;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+	
+	public LocalDate getDATANASCIMENTO() {
+		return DATANASCIMENTO;
+	}
+
+	public long getCPF() {
+		return CPF;
+	}
+	
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + ", sobrenome=" + sobrenome + ", dataNascimento=" + DATANASCIMENTO + ", cpf="
+				+ CPF + "]";
+	}
+
+	
+	
+	
+
+}
+************************************************************
+package main;
+import java.time.LocalDate;
+
+public class Conta extends Usuario implements OperacoesBancarias{ 
+
+	private int numeroConta;
+	private float corrente;
+	private float poupanca;
+	
+	
+	public Conta(String nome, String sobrenome, LocalDate DATANASCIMENTO , 
+			 long CPF, int numeroConta, float corrente, float poupanca) {
+		super(nome, sobrenome, DATANASCIMENTO, CPF);
+		this.numeroConta = numeroConta; //adicionar random?
+		this.setCorrente(corrente);
+		this.setPoupanca(poupanca);
+	}
+
+	public void depositarCorrente(float valorDeposito) {
+		if(valorDeposito > 0) {
+			this.setCorrente(this.getCorrente() + valorDeposito);
+			System.out.println("Deposito de: R$"+valorDeposito+" realizado com sucesso!\nNovo saldo da conta "
+					+ "corrente: R$"+this.getCorrente());
+		}else {
+			throw new IllegalArgumentException("O valor do deposito deve ser maior que zero.");
+		}
+	}
+	
+	public void depositarPoupanca(float valorDeposito) {
+		if(valorDeposito > 0) {
+			this.setPoupanca(this.getPoupanca() + valorDeposito);
+			System.out.println("Depósito de: R$"+valorDeposito+" realizado com sucesso!\nNovo saldo da conta "+this.getNumeroConta()
+					+ " poupança: R$"+this.getPoupanca());
+		}else {
+			throw new IllegalArgumentException("O valor do deposito deve ser maior que zero.");
+		}
+	}
+	
+	public void sacarCorrente(float valorSaque) {
+		if(this.getCorrente() >= valorSaque && valorSaque > 0) {
+			this.setCorrente(this.getCorrente() - valorSaque);
+			System.out.println("Saque de: R$"+valorSaque+" realizado com sucesso!\nNovo saldo da conta "+this.getNumeroConta()
+					+ " corrente: R$"+this.getCorrente());
+		}else {
+			throw new IllegalArgumentException("O valor do saque deve ser positivo e menor ou igual ao valor na conta.");
+		}
+	}
+	
+	public void sacarPoupanca(float valorSaque) {
+		if(this.getPoupanca() >= valorSaque && valorSaque > 0) {
+			this.setPoupanca(this.getPoupanca() - valorSaque);
+			System.out.println("Saque de: R$"+valorSaque+" realizado com sucesso!\nNovo saldo da conta "+this.getNumeroConta()
+			+ " poupança: R$"+this.getPoupanca());
+		}else {
+			throw new IllegalArgumentException("O valor do saque deve ser positivo e menor ou igual ao valor na conta.");
+		}
+	}
+	
+	public int getNumeroConta() {
+		return numeroConta;
+	}
+
+	public void setNumeroConta(int numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
+	public float getCorrente() {
+		return corrente;
+	}
+
+	public void setCorrente(float corrente) {
+		if(corrente >= 0) {
+			this.corrente = corrente;
+		}else {
+			throw new IllegalArgumentException("Valor precisa ser positivo ou zero.");
+		}
+	}
+
+	public float getPoupanca() {
+		return poupanca;
+	}
+
+	public void setPoupanca(float poupanca) {
+		if(poupanca >= 0) {
+			this.poupanca = poupanca;
+		}else {
+			throw new IllegalArgumentException("Valor precisa ser positivo ou zero.");
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Conta [numeroConta=" + numeroConta + ", corrente=" + corrente + ", poupanca=" + poupanca
+				+ ", toString()=" + super.toString() + "]"; 
+	}
+
+	
+	
+	
+	
+
+}
+*****************************************************
+package main;
+
+public interface OperacoesBancarias {
+	
+	public void depositarCorrente(float valorDeposito);
+	
+	public void depositarPoupanca(float valorDeposito);
+	
+	public void sacarCorrente(float valorSaque);
+	
+	public void sacarPoupanca(float valorSaque);
+
+}

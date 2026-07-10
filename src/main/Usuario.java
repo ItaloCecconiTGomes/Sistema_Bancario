@@ -23,7 +23,7 @@ public class Usuario {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	private void setNome(String nome) {
 		this.nome = nome;
 	}
 
@@ -31,7 +31,7 @@ public class Usuario {
 		return sobrenome;
 	}
 
-	public void setSobrenome(String sobrenome) {
+	private void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
 	

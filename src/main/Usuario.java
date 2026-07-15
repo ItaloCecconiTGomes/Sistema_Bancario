@@ -1,8 +1,10 @@
 package main;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Random;
 
 public class Usuario {
+	private int idUsuario;
 	private String nome;
 	private String sobrenome;
 	private final LocalDate DATANASCIMENTO;
@@ -13,6 +15,7 @@ public class Usuario {
         if (idade < 18) {
             throw new IllegalArgumentException("É necessário ser maior de idade para criar uma conta");
         }
+        this.idUsuario = 0;
 		this.nome = nome;		
 		this.sobrenome = sobrenome;
 		this.DATANASCIMENTO = DATANASCIMENTO;
@@ -42,12 +45,14 @@ public class Usuario {
 	public long getCPF() {
 		return CPF;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Usuario [nome=" + nome + ", sobrenome=" + sobrenome + ", dataNascimento=" + DATANASCIMENTO + ", cpf="
-				+ CPF + "]";
+		return "Usuario [idUsuario=" + idUsuario + ", nome=" + nome + ", sobrenome=" + sobrenome + ", DATANASCIMENTO="
+				+ DATANASCIMENTO + ", CPF=" + CPF + "]";
 	}
+	
+	
 
 	
 	

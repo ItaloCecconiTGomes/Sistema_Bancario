@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class TesteConexao {
-
+	//CLASSE UTILIZADA APENAS PARA TESTAR UMA CONEXÃO INICIAL COM O BANCO, NÃO É MAIS UTILIZADA
     public static void main(String[] args) {
         
         // 1. Definicao das rotas e das credenciais

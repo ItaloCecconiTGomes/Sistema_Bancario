@@ -2,22 +2,24 @@ package main;
 import java.time.LocalDate;
 import java.util.Random;
 
-public class Conta extends Usuario implements OperacoesBancarias{ 
+public class Conta  implements OperacoesBancarias{ 
 
+	private int numeroAgencia;
 	private int numeroConta;
 	private boolean contaAtivada;
 	private float corrente;
 	private float poupanca;
+	private int idDono;
 	
 	
-	public Conta(String nome, String sobrenome, LocalDate DATANASCIMENTO , 
-			 long CPF, float corrente, float poupanca) {
-		super(nome, sobrenome, DATANASCIMENTO, CPF);
+	public Conta(float corrente, float poupanca, int idDono) {
 		Random gerador = new Random();
-		this.numeroConta = gerador.nextInt(9000) + 1000;
+		this.numeroAgencia = gerador.nextInt(9000) + 1000;
+		this.numeroConta = gerador.nextInt(900000) + 100000;
 		this.contaAtivada = true;
 		this.setCorrente(corrente);
 		this.setPoupanca(poupanca);
+		this.idDono = idDono;
 	}
 
 	public void ativarConta() {
@@ -120,6 +122,14 @@ public class Conta extends Usuario implements OperacoesBancarias{
 		return corrente;
 	}
 
+	public int getNumeroAgencia() {
+		return numeroAgencia;
+	}
+
+	public void setNumeroAgencia(int numeroAgencia) {
+		this.numeroAgencia = numeroAgencia;
+	}
+
 	private void setCorrente(float corrente) {
 		if(corrente >= 0) {
 			this.corrente = corrente;
@@ -139,13 +149,22 @@ public class Conta extends Usuario implements OperacoesBancarias{
 			throw new IllegalArgumentException("Valor precisa ser positivo ou zero.");
 		}
 	}
+
+	public int getIdDono() {
+		return this.idDono;
+	}
+
+	public void setIdDono(int idDono) {
+		this.idDono = idDono;
+	}
 	
 	//Todos os sets foram transformados em private para impedir de serem usados na classe Banco.
 
 	@Override
 	public String toString() {
-		return "Conta [numeroConta=" + numeroConta + ", corrente=" + corrente + ", poupanca=" + poupanca
-				+ ", toString()=" + super.toString() + "]"; 
+		return "Conta [numeroAgencia=" + numeroAgencia + ", numeroConta=" + numeroConta + ", contaAtivada="
+				+ contaAtivada + ", corrente=" + corrente + ", poupanca=" + poupanca + ", toString()="
+				+ super.toString() + "]";
 	}
-
+	
 }
